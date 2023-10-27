@@ -1,5 +1,6 @@
 // @ts-ignore
-import Yoga from 'yoga-layout/sync';
+// import Yoga from 'yoga-layout/sync';
+import Yoga from 'yoga-layout/src/entrypoint/asmjs-sync-web';
 
 export const LayoutAlignMap = {
   auto: Yoga.ALIGN_AUTO,
@@ -39,7 +40,9 @@ export const JustifyContentMap = {
   'space-evenly': Yoga.JUSTIFY_SPACE_EVENLY,
 };
 
-export type NumberOrAuto = number | string | 'auto';
+export type NumberOrAuto = number | 'auto';
+export type NumberOrAutoOrPercent = number | 'auto' | `${number}%`;
+export type NumberOrPercent = number | `${number}%`;
 
 export interface LayoutAttrs {
   alignContent: keyof typeof LayoutAlignMap;
@@ -47,7 +50,7 @@ export interface LayoutAttrs {
   alignSelf: keyof typeof LayoutAlignMap;
   display: keyof typeof DisplayMap;
   flex: number;
-  flexBasis: number | string;
+  flexBasis: NumberOrAutoOrPercent;
   flexGrow: number;
   flexShrink: number;
   flexDirection: keyof typeof FlexDirectionMap;
@@ -55,8 +58,8 @@ export interface LayoutAttrs {
   height: NumberOrAuto;
   width: NumberOrAuto;
   justifyContent: keyof typeof JustifyContentMap;
-  margin: NumberOrAuto | NumberOrAuto[];
-  padding: number | string | (number | string)[];
+  margin: NumberOrAutoOrPercent | NumberOrAutoOrPercent[];
+  padding: NumberOrPercent | NumberOrPercent[];
   maxHeight: number;
   maxWidth: number;
   minHeight: number;

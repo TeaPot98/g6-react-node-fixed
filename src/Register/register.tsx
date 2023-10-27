@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import { IGroup, ModelConfig, ShapeOptions } from '@antv/g6';
-import getShapeFromReact from './getDataFromReactNode';
+import { IGroup, IShape, ModelConfig, ShapeOptions } from '@antv/g6';
+import getShapeFromReact, { RawNode } from './getDataFromReactNode';
 import getPositionUsingYoga, {
   LayoutedNode,
 } from '../Layout/getPositionsUsingYoga';
@@ -13,19 +13,24 @@ export const registerNodeReact = (el: ReactElement) => {
   return target;
 };
 
-const renderTarget = (target: LayoutedNode, group: any) => {
+const renderTarget = (target: LayoutedNode, group: IGroup): IShape | IGroup => {
   let g = group;
-  let keyshape = group;
+  let keyshape: IShape | IGroup = group;
   const { attrs = {}, boundaryBox, type, children, props } = target;
   if (target.type !== 'group') {
-    const shape = group.addShape(target.type, {
-      attrs,
+    const shape = group.addShape(type, {
+      attrs: {
+        ...attrs,
+        width: attrs.width === 'auto' ? undefined : attrs.width,
+        height: attrs.height === 'auto' ? undefined : attrs.height,
+      },
       origin: {
         boundaryBox,
         type,
         children,
       },
       ...props,
+      name: 'test-unique-name',
     });
     keyshape = shape;
   } else {
@@ -38,27 +43,25 @@ const renderTarget = (target: LayoutedNode, group: any) => {
       .map(n => renderTarget(n, g))
       .filter(e => e);
     if (keyshapes.length) {
+      // @ts-ignore - we check if it's empty
       keyshape = keyshapes.pop();
     }
   }
   return keyshape;
 };
 
-export async function createNodeFromReact(
-  Component: React.FC<{ cfg: ModelConfig }>,
-) {
+export function createNodeFromReact(Component: React.FC<{ cfg: ModelConfig }>) {
   const structures: { [key: string]: LayoutedNode[] } = {};
   const compileXML = (cfg: ModelConfig) =>
     registerNodeReact(<Component cfg={cfg} />);
 
   return {
-    draw(cfg: ModelConfig, fatherGroup: any) {
+    draw(cfg: ModelConfig, fatherGroup) {
       const resultTarget = compileXML(cfg || {});
-      let keyshape = fatherGroup;
-      keyshape = renderTarget(resultTarget, fatherGroup);
+      let keyshape = (fatherGroup as unknown) as IShape;
+      keyshape = renderTarget(resultTarget, fatherGroup) as IShape;
 
       structures[String(cfg.id)] = [resultTarget];
-
       return keyshape;
     },
     update(cfg: ModelConfig, node: any) {

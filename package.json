@@ -30,13 +30,13 @@
     ]
   },
   "dependencies": {
-    "@antv/g6": "^4.0.3",
+    "@antv/g6": "^4.8.17",
     "react": "^16.12.0",
     "yoga-layout": "^2.0.0"
   },
   "devDependencies": {
     "@umijs/test": "^3.0.5",
-    "dumi": "^1.1.30",
+    "dumi": "^1.1.1",
     "father-build": "^1.17.2",
     "gh-pages": "^3.0.0",
     "lint-staged": "^10.0.7",

@@ -1,5 +1,6 @@
 // @ts-ignore
-import Yoga, { Node } from 'yoga-layout/sync';
+// import Yoga, { Node } from 'yoga-layout/sync';
+import Yoga, { Node } from 'yoga-layout/src/entrypoint/asmjs-sync-web';
 import { RawNode } from '../Register/getDataFromReactNode';
 import getSizeOfShape from './getShapeSize';
 import {
@@ -10,7 +11,7 @@ import {
   LayoutAlignMap,
 } from './LayoutEnums';
 
-const getFourFromNumOrArr = (target: string | number | (string | number)[]) => {
+const getFourFromNumOrArr = <T = string | number>(target: T | T[]): T[] => {
   if (target instanceof Array) {
     switch (target.length) {
       case 1:
@@ -25,7 +26,7 @@ const getFourFromNumOrArr = (target: string | number | (string | number)[]) => {
       case 4:
         return target;
       default:
-        return [0, 0, 0, 0];
+        return [0, 0, 0, 0] as T[];
     }
   } else {
     return [target, target, target, target];
@@ -58,7 +59,7 @@ const constructYogaNode = (node: RawNode) => {
     yogaNode.setFlex(style.flex);
   }
   if (style.flexBasis) {
-    yogaNode.setFlexBasis(style.flexBasis as number | 'auto');
+    yogaNode.setFlexBasis(style.flexBasis);
   }
   if (style.flexGrow) {
     yogaNode.setFlexGrow(style.flexGrow);
@@ -91,21 +92,18 @@ const constructYogaNode = (node: RawNode) => {
     if (style.height === 'auto') {
       yogaNode.setHeightAuto();
     } else {
-      yogaNode.setHeight(style.height as number | 'auto');
+      yogaNode.setHeight(style.height);
     }
   }
   if (style.width) {
     if (style.width === 'auto') {
       yogaNode.setWidthAuto();
     } else {
-      yogaNode.setWidth(style.width as number | 'auto');
+      yogaNode.setWidth(style.width);
     }
   }
   if (style.margin) {
-    const marginArray = getFourFromNumOrArr(style.margin) as (
-      | number
-      | 'auto'
-    )[];
+    const marginArray = getFourFromNumOrArr(style.margin);
 
     if (marginArray[0] === 'auto') {
       yogaNode.setMarginAuto(Yoga.EDGE_TOP);
@@ -133,7 +131,7 @@ const constructYogaNode = (node: RawNode) => {
   }
 
   if (style.padding) {
-    const paddingArray = getFourFromNumOrArr(style.padding) as number[];
+    const paddingArray = getFourFromNumOrArr(style.padding);
     yogaNode.setPadding(Yoga.EDGE_TOP, paddingArray[0]);
     yogaNode.setPadding(Yoga.EDGE_RIGHT, paddingArray[1]);
     yogaNode.setPadding(Yoga.EDGE_BOTTOM, paddingArray[2]);

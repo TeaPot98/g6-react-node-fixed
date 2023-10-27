@@ -2,6 +2,9 @@ import { defineConfig } from 'dumi';
 
 export default defineConfig({
   title: 'G6 React Node Fixed',
+  favicon:
+    'https://gw.alipayobjects.com/zos/antfincdn/cfg5jFqgVt/DiceGraph.png',
+  logo: 'https://gw.alipayobjects.com/zos/antfincdn/cfg5jFqgVt/DiceGraph.png',
   outputPath: 'docs',
   locales: [
     ['zh-CN', '中文'],
