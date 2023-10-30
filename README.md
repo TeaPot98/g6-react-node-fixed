@@ -3,7 +3,7 @@
 > Using React Component to custom your g6 node
 
 * Updated to yoga-layout v2
-* Added `children` props to components
+* Added `children` prop to components
 * Fixed some TS types
 
 ## Docs
