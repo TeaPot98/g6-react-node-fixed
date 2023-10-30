@@ -1,6 +1,6 @@
 // @ts-ignore
-// import Yoga, { Node } from 'yoga-layout/sync';
-import Yoga, { Node } from 'yoga-layout/src/entrypoint/asmjs-sync-web';
+import Yoga, { Node } from 'yoga-layout/sync';
+// import Yoga, { Node } from 'yoga-layout/src/entrypoint/asmjs-sync-web';
 import { RawNode } from '../Register/getDataFromReactNode';
 import getSizeOfShape from './getShapeSize';
 import {

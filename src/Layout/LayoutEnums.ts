@@ -1,6 +1,6 @@
 // @ts-ignore
-// import Yoga from 'yoga-layout/sync';
-import Yoga from 'yoga-layout/src/entrypoint/asmjs-sync-web';
+import Yoga from 'yoga-layout/sync';
+// import Yoga from 'yoga-layout/src/entrypoint/asmjs-sync-web';
 
 export const LayoutAlignMap = {
   auto: Yoga.ALIGN_AUTO,
