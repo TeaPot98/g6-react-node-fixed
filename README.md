@@ -2,7 +2,7 @@
 
 > Using React Component to custom your g6 node
 
-* Updated to yoga-layout v2
+* Updated to yoga-layout v2 (fixed undefined `_a` error)
 * Added `children` prop to components
 * Fixed some TS types
 
